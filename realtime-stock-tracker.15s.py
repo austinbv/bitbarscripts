@@ -18,12 +18,6 @@ def get_stock_price(stock):
         print "Loading"
         sys.exit(1)
 
-def get_market_status(mkt):
-    try:
-        response = urllib2.urlopen('https://api.iextrading.com/1.0/stock/' + stock + '/quote')
-        return json.loads(response.read())
-    except:
-        sys.exit(1)
 def create_output_string(stock, response):
     output = {'stock': stock}
     output['deliminitor'] = "▲" if response["changePercent"] > 0 else "▼"
@@ -34,7 +28,8 @@ def create_output_string(stock, response):
     return "{stock} {deliminitor} ${price} ({percent_change}) | color = {color}".format(**output)
 
 def main():
-    stocks = ["PVTL", "PYPL"]
+    stocks = ["PVTL", "PYPL", "GOOS"]
+
     for stock in stocks:
         response = get_stock_price(stock)
         print create_output_string(stock, response)
